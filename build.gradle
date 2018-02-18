@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '1.5.10.RELEASE'
+}
+
+group 'ru.tkachenko'
+version '1.0-SNAPSHOT'
+
+buildDir = 'target'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework:spring-jdbc")
+
+    runtime 'com.h2database:h2'
+
+    compileOnly 'org.projectlombok:lombok'
+
+    testCompile 'org.codehaus.groovy:groovy-all'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.spockframework:spock-core'
+    testCompile 'org.spockframework:spock-spring'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.4'
+}
