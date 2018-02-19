@@ -1,0 +1,8 @@
+db:
+  postgreSql:
+    url: jdbc:postgresql://localhost/dmtk
+    username: dmtk
+    password: root
+    driverClassName: org.postgresql.Driver
+  h2:
+    url: jdbc:h2:mem:db

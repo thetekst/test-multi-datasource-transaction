@@ -19,19 +19,20 @@ public class PostgreSqlConfig {
     @Bean
     @Qualifier("postgreSql")
     @ConfigurationProperties(prefix = "db.postgreSql")
-    private DataSource postgreSqlDataSource() {
+    public DataSource postgreSqlDataSource() {
+//        return postgreSqlDataSourceProperties().initializeDataSourceBuilder().build();
         return DataSourceBuilder.create().build();
     }
 
     @Bean
     @Qualifier("postgreSqlNamedParameterJdbcTemplate")
-    private NamedParameterJdbcTemplate postgreSqlNamedParameterJdbcTemplate(@Qualifier("postgreSql") final DataSource dataSource) {
+    NamedParameterJdbcTemplate postgreSqlNamedParameterJdbcTemplate(@Qualifier("postgreSql") final DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Bean
     @Qualifier("postgreSqlTxm")
-    private DataSourceTransactionManager postgreSqlTxm(@Qualifier("postgreSql") final DataSource dataSource) {
+    DataSourceTransactionManager postgreSqlTxm(@Qualifier("postgreSql") final DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }

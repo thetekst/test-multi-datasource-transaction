@@ -18,20 +18,21 @@ public class PrimaryDbConfig {
 
     @Bean
     @Primary
+//    @Qualifier("h2")
     @ConfigurationProperties(prefix = "db.h2")
-    private DataSource defaultDataSource() {
+    public DataSource defaultDataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Bean
     @Primary
-    private NamedParameterJdbcTemplate defaultNamedParameterJdbcTemplate(final DataSource dataSource) {
+    NamedParameterJdbcTemplate defaultNamedParameterJdbcTemplate(/*@Qualifier("h2")*/ final DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Bean
     @Primary
-    private DataSourceTransactionManager h2Txm(final DataSource dataSource) {
+    DataSourceTransactionManager h2Txm(/*@Qualifier("h2")*/ final DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }

@@ -1,11 +1,13 @@
+package ru
+
 import groovy.util.logging.Log4j
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.transaction.annotation.Transactional
-import ru.config.PostgreSqlConfig
-import ru.config.PrimaryDbConfig
 import ru.model.Employee
 import spock.lang.Specification
 
@@ -13,12 +15,15 @@ import spock.lang.Specification
  * Created by Dmitry Tkachenko on 2/18/18
  */
 @Log4j
-@SpringBootTest(classes = [PrimaryDbConfig, PostgreSqlConfig])
-class DbTest extends Specification {
+@ContextConfiguration
+@SpringBootTest(classes = [Application])
+class H2Test extends Specification {
 
     @Autowired
-    @Qualifier('postgreSqlNamedParameterJdbcTemplate')
-    NamedParameterJdbcTemplate jdbc
+    private JdbcTemplate h2jdbcTemplate;
+
+    @Autowired
+    private NamedParameterJdbcTemplate h2NamedJdbcTemplate
 
     def 'test 1'() {
         given: 'a list of employees'
@@ -27,12 +32,19 @@ class DbTest extends Specification {
                 new Employee(name: 'Den'),
                 new Employee(name: 'John')
         ]
+        def insertQuery = 'INSERT INTO employee (name) VALUES(:name)'
+        def selectAllQuery = 'SELECT * FROM employee'
         when:
         employees.each {
             println it.name
         }
-        jdbc.execute('DROP TABLE employee IF EXISTS')
-        jdbc.execute("CREATE TABLE employee(id SERIAL, name VARCHAR(255))");
+        h2jdbcTemplate.execute('DROP TABLE employee IF EXISTS')
+        h2jdbcTemplate.execute("CREATE TABLE employee(id SERIAL, name VARCHAR(255))")
+        employees.each {
+            h2NamedJdbcTemplate.update(insertQuery, new MapSqlParameterSource().addValue('name', it.name))
+        }
+//        h2jdbcTemplate.q(selectAllQuery)
+//        h2jdbcTemplate.batchUpdate("INSERT INTO employee(name) VALUES (?)", employees)
         then:
         1 == 1
 
