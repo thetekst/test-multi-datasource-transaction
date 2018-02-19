@@ -19,6 +19,7 @@ dependencies {
 
     runtime 'com.h2database:h2'
     compile 'postgresql:postgresql:9.1-901-1.jdbc4'
+    compile 'com.oracle:ojdbc6:11.2.0.4.0'
     compile 'commons-dbcp:commons-dbcp:1.4'
 
 

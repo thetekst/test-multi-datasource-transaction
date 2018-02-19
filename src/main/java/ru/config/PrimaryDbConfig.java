@@ -18,21 +18,20 @@ public class PrimaryDbConfig {
 
     @Bean
     @Primary
-//    @Qualifier("h2")
-    @ConfigurationProperties(prefix = "db.h2")
+    @ConfigurationProperties(prefix = "db.oracle")
     public DataSource defaultDataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Bean
     @Primary
-    NamedParameterJdbcTemplate defaultNamedParameterJdbcTemplate(/*@Qualifier("h2")*/ final DataSource dataSource) {
+    NamedParameterJdbcTemplate defaultNamedParameterJdbcTemplate(final DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Bean
     @Primary
-    DataSourceTransactionManager h2Txm(/*@Qualifier("h2")*/ final DataSource dataSource) {
+    DataSourceTransactionManager h2Txm(final DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }

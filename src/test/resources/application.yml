@@ -1,8 +1,13 @@
 db:
   postgreSql:
-    url: jdbc:postgresql://localhost/dmtk
-    username: dmtk
-    password: root
+    url: jdbc:postgresql://xx.168.xx.xxx:5432/xxx
+    username: xxx
+    password: xxx
     driverClassName: org.postgresql.Driver
+  oracle:
+    url: jdbc:oracle:thin:@xx.xx.xx.xx:1522/xx
+    username: xx
+    password: xx
+    driverClassName: oracle.jdbc.OracleDriver
   h2:
     url: jdbc:h2:mem:db

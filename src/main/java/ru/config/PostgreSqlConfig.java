@@ -20,7 +20,6 @@ public class PostgreSqlConfig {
     @Qualifier("postgreSql")
     @ConfigurationProperties(prefix = "db.postgreSql")
     public DataSource postgreSqlDataSource() {
-//        return postgreSqlDataSourceProperties().initializeDataSourceBuilder().build();
         return DataSourceBuilder.create().build();
     }
 
